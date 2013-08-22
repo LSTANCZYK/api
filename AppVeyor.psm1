@@ -52,6 +52,21 @@ function Get-AppveyorProject
     }
 }
 
+# T /api/projects/version?projectName=test-web&versionName=1.0.5
+function Get-AppveyorProjectVersion
+{
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$Name,
+
+        [Parameter(Mandatory=$true)]
+        [string]$Version
+    )
+
+    # get project version
+    Invoke-ApiGet "/api/projects/version?projectName=$Name&versionName=$Version"
+}
+
 function Invoke-ApiGet
 {
     param (
@@ -136,3 +151,8 @@ function Get-AuthorizationHeaderValue
     }
     return $headerValue
 }
+
+# export module members
+Export-ModuleMember -Function `
+    Set-AppveyorConnection, `
+    Get-AppveyorProject, Get-AppveyorProjectVersion
